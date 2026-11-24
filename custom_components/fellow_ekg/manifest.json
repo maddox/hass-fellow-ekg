@@ -9,7 +9,7 @@
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/maddox/hass-fellow-ekg/issues",
   "requirements": [
-    "fellow-ekg @ git+https://github.com/maddox/fellow-ekg.git@2b384ec22e236ff20133bf09c074ee297470ec8b"
+    "https://github.com/maddox/fellow-ekg/archive/4339bdb43ca2467dd712a40c5b7f5bf882c90cf4.zip#fellow-ekg==0.2.0"
   ],
   "version": "0.1.0",
   "zeroconf": ["_ekg._tcp.local."]

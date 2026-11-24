@@ -96,8 +96,27 @@ its internet access, and allow only Home Assistant to reach it.
 
 ```bash
 python3 -m venv .venv
-.venv/bin/pip install pytest-homeassistant-custom-component -e ../fellow-ekg[discovery]
+.venv/bin/pip install pytest-homeassistant-custom-component
 .venv/bin/pytest
 ```
 
 The tests mock the kettle client and zeroconf, so they never touch a real device.
+
+### The vendored library
+
+The [`fellow-ekg`](https://github.com/maddox/fellow-ekg) library is
+**vendored** into `custom_components/fellow_ekg/vendor/` rather than listed in
+`manifest.json` requirements. Some Home Assistant installs run as a non-root
+user or with a read-only filesystem, and can't pip-install anything into their
+`site-packages`. The library is pure Python, and its only imports (`aiohttp`
+and `zeroconf`) already ship with Home Assistant, so the integration installs
+nothing at all.
+
+Don't edit the vendored copy. Change the library, then update it with:
+
+```bash
+script/vendor-fellow-ekg <git ref>   # defaults to main
+```
+
+The vendored version and commit are recorded in
+`custom_components/fellow_ekg/vendor/__init__.py`.

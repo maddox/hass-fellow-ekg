@@ -6,7 +6,7 @@ from collections.abc import Generator
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-from fellow_ekg import FirmwareInfo, parse_state
+from custom_components.fellow_ekg.vendor.fellow_ekg import FirmwareInfo, parse_state
 from homeassistant.const import CONF_HOST
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 

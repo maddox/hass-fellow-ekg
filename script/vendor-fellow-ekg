@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Copy the fellow-ekg library into the integration at a given git ref.
+#
+# The library is vendored rather than listed in manifest.json "requirements"
+# because some Home Assistant installs (non-root or read-only containers)
+# can't pip-install into their site-packages. It's pure Python, and its only
+# imports (aiohttp, zeroconf) ship with Home Assistant.
+#
+# Usage: script/vendor-fellow-ekg [ref]   (default: main)
+set -euo pipefail
+
+REF="${1:-main}"
+REPO="https://github.com/maddox/fellow-ekg.git"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+DEST="$ROOT/custom_components/fellow_ekg/vendor"
+
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
+
+git clone --quiet "$REPO" "$TMP/fellow-ekg"
+git -C "$TMP/fellow-ekg" checkout --quiet "$REF"
+SHA="$(git -C "$TMP/fellow-ekg" rev-parse HEAD)"
+VERSION="$(sed -n 's/^version = "\(.*\)"/\1/p' "$TMP/fellow-ekg/pyproject.toml")"
+
+rm -rf "$DEST"
+mkdir -p "$DEST"
+cp -R "$TMP/fellow-ekg/src/fellow_ekg" "$DEST/fellow_ekg"
+cp "$TMP/fellow-ekg/LICENSE" "$DEST/fellow_ekg/LICENSE"
+find "$DEST" -name __pycache__ -prune -exec rm -rf {} +
+
+cat > "$DEST/__init__.py" <<PY
+"""Vendored copy of fellow-ekg. Do not edit; run script/vendor-fellow-ekg."""
+
+FELLOW_EKG_VERSION = "$VERSION"
+FELLOW_EKG_COMMIT = "$SHA"
+PY
+
+echo "Vendored fellow-ekg $VERSION ($SHA)"

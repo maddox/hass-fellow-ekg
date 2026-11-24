@@ -1,16 +1,20 @@
 {
   "domain": "fellow_ekg",
   "name": "Fellow EKG Pro",
-  "codeowners": ["@maddox"],
+  "codeowners": [
+    "@maddox"
+  ],
   "config_flow": true,
-  "dependencies": ["zeroconf"],
+  "dependencies": [
+    "zeroconf"
+  ],
   "documentation": "https://github.com/maddox/hass-fellow-ekg",
   "integration_type": "device",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/maddox/hass-fellow-ekg/issues",
-  "requirements": [
-    "https://github.com/maddox/fellow-ekg/archive/2275495fd2f5127f41fe483ae5bf38641ee27e9f.zip#fellow-ekg==0.2.1"
-  ],
-  "version": "0.1.1",
-  "zeroconf": ["_ekg._tcp.local."]
+  "requirements": [],
+  "version": "0.1.2",
+  "zeroconf": [
+    "_ekg._tcp.local."
+  ]
 }

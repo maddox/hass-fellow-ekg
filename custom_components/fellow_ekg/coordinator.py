@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import time
 
-from fellow_ekg import EKGClient, EKGError, EKGState, FirmwareInfo
+from .vendor.fellow_ekg import EKGClient, EKGError, EKGState, FirmwareInfo
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError, ServiceValidationError

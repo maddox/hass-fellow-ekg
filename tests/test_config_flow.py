@@ -2,7 +2,7 @@ from dataclasses import replace
 from ipaddress import ip_address
 from unittest.mock import patch
 
-from fellow_ekg import DiscoveredKettle, EKGConnectionError
+from custom_components.fellow_ekg.vendor.fellow_ekg import DiscoveredKettle, EKGConnectionError
 from homeassistant import config_entries
 from homeassistant.const import CONF_HOST
 from homeassistant.core import HomeAssistant

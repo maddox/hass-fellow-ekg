@@ -2,7 +2,7 @@ from datetime import timedelta
 from unittest.mock import patch
 
 import pytest
-from fellow_ekg import EKGConnectionError
+from custom_components.fellow_ekg.vendor.fellow_ekg import EKGConnectionError
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import STATE_OFF, STATE_ON, STATE_UNAVAILABLE
 from homeassistant.core import HomeAssistant

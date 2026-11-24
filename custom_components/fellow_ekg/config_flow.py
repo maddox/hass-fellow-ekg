@@ -7,7 +7,7 @@ from types import SimpleNamespace
 from typing import Any
 
 import voluptuous as vol
-from fellow_ekg import DiscoveredKettle, EKGClient, EKGError, async_discover, kettle_from_service_info
+from .vendor.fellow_ekg import DiscoveredKettle, EKGClient, EKGError, async_discover, kettle_from_service_info
 from homeassistant.components import zeroconf
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult, OptionsFlow
 from homeassistant.const import CONF_HOST

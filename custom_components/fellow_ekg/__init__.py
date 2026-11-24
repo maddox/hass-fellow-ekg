@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 
-from fellow_ekg import EKGClient, EKGError
+from .vendor.fellow_ekg import EKGClient, EKGError
 from homeassistant.const import CONF_HOST, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady

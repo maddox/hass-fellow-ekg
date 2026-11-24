@@ -4,7 +4,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
-from fellow_ekg import EKGState
+from .vendor.fellow_ekg import EKGState
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,

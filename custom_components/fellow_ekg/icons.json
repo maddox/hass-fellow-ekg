@@ -1,0 +1,19 @@
+{
+  "entity": {
+    "number": {
+      "auto_off_temperature": { "default": "mdi:thermometer-auto" }
+    },
+    "sensor": {
+      "water_temperature": { "default": "mdi:thermometer-water" },
+      "kettle_target_temperature": { "default": "mdi:thermometer-check" },
+      "boil_temperature": { "default": "mdi:thermometer-high" },
+      "mode": { "default": "mdi:kettle-outline" }
+    },
+    "switch": {
+      "heater": {
+        "default": "mdi:kettle",
+        "state": { "on": "mdi:kettle-steam" }
+      }
+    }
+  }
+}

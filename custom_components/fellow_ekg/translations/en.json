@@ -1,0 +1,55 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "user": {
+        "title": "Fellow EKG Pro",
+        "description": "Enter the IP address or hostname of your kettle.",
+        "data": { "host": "Host" },
+        "data_description": { "host": "For example 192.168.1.50 or EKG-f0-73-3c.local" }
+      },
+      "zeroconf_confirm": {
+        "title": "Fellow EKG Pro",
+        "description": "Add {name} at {host}?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach the kettle. Check that it is powered on and on the same network."
+    },
+    "abort": {
+      "already_configured": "This kettle is already configured.",
+      "cannot_connect": "Could not reach the kettle.",
+      "no_ipv4": "The kettle did not advertise an IPv4 address."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Heater safety",
+        "data": { "max_heat_minutes": "Maximum heating time (minutes)" },
+        "data_description": {
+          "max_heat_minutes": "The heater switch always turns off after this long, even if the auto-off temperature hasn't been reached."
+        }
+      }
+    }
+  },
+  "entity": {
+    "number": {
+      "auto_off_temperature": { "name": "Auto-off temperature" }
+    },
+    "sensor": {
+      "water_temperature": { "name": "Water temperature" },
+      "kettle_target_temperature": { "name": "Kettle target temperature" },
+      "boil_temperature": { "name": "Boiling point" },
+      "mode": { "name": "Mode" }
+    },
+    "switch": {
+      "heater": { "name": "Heater" }
+    }
+  },
+  "exceptions": {
+    "already_at_target": {
+      "message": "Water is already at {temperature} °C, at or above the auto-off temperature of {target} °C."
+    }
+  }
+}

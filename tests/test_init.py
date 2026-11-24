@@ -38,7 +38,8 @@ async def test_entities(hass: HomeAssistant, mock_client, config_entry) -> None:
     assert float(hass.states.get("sensor.fellow_ekg_pro_kettle_target_temperature").state) == pytest.approx(96.11, abs=0.01)
     assert float(hass.states.get("sensor.fellow_ekg_pro_boiling_point").state) == 100.0
     mode = hass.states.get("sensor.fellow_ekg_pro_mode")
-    assert mode.state == "S_Off"
+    assert mode.state == "Off"
+    assert mode.attributes["raw_mode"] == "S_Off"
     assert mode.attributes["nw"] == 0
     assert hass.states.get(SWITCH).state == STATE_OFF
     # Auto-off defaults to the kettle's own target.
@@ -138,3 +139,20 @@ async def test_unload_when_idle_does_not_touch_heater(hass: HomeAssistant, mock_
     await _setup(hass, config_entry)
     assert await hass.config_entries.async_unload(config_entry.entry_id)
     mock_client.heat_off.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    ("raw", "shown"),
+    [
+        ("S_Off", "Off"),
+        ("S_HeatHold", "Heat hold"),
+        ("S_BOIL", "Boil"),
+        ("S_keep_warm", "Keep warm"),
+        ("Idle", "Idle"),
+        (None, None),
+    ],
+)
+def test_humanize_mode(raw, shown) -> None:
+    from custom_components.fellow_ekg.sensor import humanize_mode
+
+    assert humanize_mode(raw) == shown

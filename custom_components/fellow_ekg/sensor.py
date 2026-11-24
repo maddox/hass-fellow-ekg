@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
@@ -52,10 +53,34 @@ SENSORS: tuple[FellowEKGSensorDescription, ...] = (
     ),
     FellowEKGSensorDescription(
         key="mode",
-        value_fn=lambda s: s.mode,
-        attrs_fn=lambda s: {"screen": s.screen, "clock": s.clock, **s.kettle_flags},
+        value_fn=lambda s: humanize_mode(s.mode),
+        attrs_fn=lambda s: {
+            "raw_mode": s.mode,
+            "screen": s.screen,
+            "clock": s.clock,
+            **s.kettle_flags,
+        },
     ),
 )
+
+# Firmware mode codes we've observed, with friendly names. Anything else
+# falls back to humanize_mode's generic cleanup. The raw code is always
+# available as the "raw_mode" attribute, for automations.
+KNOWN_MODES: dict[str, str] = {
+    "S_Off": "Off",
+}
+
+
+def humanize_mode(mode: str | None) -> str | None:
+    """'S_Off' -> 'Off'; unknown codes like 'S_HeatHold' -> 'Heat hold'."""
+    if mode is None:
+        return None
+    if mode in KNOWN_MODES:
+        return KNOWN_MODES[mode]
+    text = re.sub(r"^S_", "", mode)
+    text = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", text).replace("_", " ")
+    text = " ".join(text.split()).lower()
+    return text[:1].upper() + text[1:] if text else mode
 
 
 async def async_setup_entry(
